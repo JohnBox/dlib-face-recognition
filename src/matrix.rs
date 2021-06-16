@@ -1,6 +1,7 @@
 use std::ops::Deref;
 
 use image::{ImageBuffer, Rgb};
+use opencv::prelude::Mat;
 
 cpp_class!(
     /// A wrapper around a `matrix<rgb_pixel>`, dlibs own image class.
@@ -53,5 +54,20 @@ impl ImageMatrix {
                 return out;
             })
         }
+    }
+}
+
+/// Copy a matrix from an opencv mat
+pub fn matrix_to_opencv_mat(mat: &Mat) -> ImageMatrix {
+    let mat = mat.as_raw_Mat();
+
+    unsafe {
+        cpp!([mat as "const cv::Mat*"] -> ImageMatrix as "dlib::matrix<dlib::rgb_pixel>" {
+            dlib::cv_image<dlib::bgr_pixel> image(*mat);
+            dlib::matrix<dlib::rgb_pixel> out;
+
+            dlib::assign_image(out, image);
+            return out;
+        })
     }
 }
