@@ -30,7 +30,7 @@ mod landmark_prediction;
 mod matrix;
 
 pub use self::geometry::{Point, Rectangle};
-pub use self::matrix::ImageMatrix;
+pub use self::matrix::{ImageMatrix, matrix_to_opencv_mat};
 
 pub use self::face_detection::{FaceDetector, FaceDetectorCnn, FaceDetectorTrait, FaceLocations};
 pub use self::face_encoding::{
