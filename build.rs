@@ -32,14 +32,18 @@ fn download_and_unzip(client: &reqwest::Client, url: &str) {
 }
 
 fn main() {
-    let mut config = cpp_build::Config::new();
-
     println!("cargo:rustc-link-lib=dlib");
     println!("cargo:rustc-link-lib=lapack");
     println!("cargo:rustc-link-lib=cblas");
 
+    #[cfg(target_os = "macos")]
+    let opencv_include_dir = "/usr/local/Cellar/opencv/4.5.2_4/include/opencv4";
+
+    #[cfg(not(target_os = "macos"))]
+    let opencv_include_dir = "/usr/include/opencv4";
+
     cpp_build::Config::new()
-        .include("/usr/include/opencv4")
+        .include(opencv_include_dir)
         .build("src/lib.rs");
 
     #[cfg(feature = "embed-any")]
