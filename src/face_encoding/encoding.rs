@@ -42,6 +42,23 @@ impl FaceEncoding {
     }
 }
 
+impl From<Vec<f64>> for FaceEncoding {
+    fn from(encoding: Vec<f64>) -> Self {
+        let inner = unsafe {
+            cpp!([encoding as "std::vector<double>"] -> FaceEncodingInner as "dlib::matrix<double,0,1>" {
+                auto inner = dlib::matrix<double,0,1>(128);
+                for (int i = 0; i < 128; i++) {
+                    inner(i) = encoding[i];
+                }
+
+                return inner;
+            })
+        };
+
+        Self { inner }
+    }
+}
+
 impl Deref for FaceEncoding {
     type Target = [f64];
 
