@@ -10,6 +10,20 @@ pub struct FaceComparer {
 }
 
 impl FaceComparer {
+    pub fn new(names: Vec<String>, values: Vec<FaceEncoding>) -> Self {
+        assert_eq!(names.len(), values.len());
+
+        let seed = names.len();
+        let names = (0..seed-1).zip(names).collect();
+        let values = (0..seed-1).zip(values).collect();
+
+        FaceComparer {
+            seed,
+            names,
+            values,
+        }
+    }
+
     pub fn insert(&mut self, name: String, value: FaceEncoding) {
         let name_str = name.as_str();
         if let Some((&key, _)) = self.names.iter().find(|(_, n)| n.as_str() == name_str) {
