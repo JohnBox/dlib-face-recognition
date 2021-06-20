@@ -62,6 +62,16 @@ impl FaceComparer {
         }
     }
 
+    pub fn find_name(&self, name: &String) -> Option<usize> {
+        self.names.iter().find_map(|(&key, n)| {
+            if n == name {
+                Some(key)
+            } else {
+                None
+            }
+        })
+    }
+
     pub fn get_name_unchecked(&self, key: &usize) -> &str {
         &self.names[key]
     }
