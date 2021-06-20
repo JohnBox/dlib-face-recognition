@@ -32,14 +32,16 @@ embed-fe-nn = ["embed-any"]
 embed-lp = ["embed-any"]
 
 [dependencies]
-cpp = "0.5"
-image = "0.23"
-opencv = "0.53.0"
+cpp = { version = "0.5" }
+image = { version = "0.23" }
+opencv = { version = "0.53.0" }
+serde = { version = "1.0.126" }
+serde_json = { version = "1.0.64" }
 
 [build-dependencies]
-cpp_build = "0.5"
+cpp_build = { version = "0.5" }
 bzip2 = { version = "0.3", optional = true }
 reqwest = { version = "0.9", optional = true }
 
 [dev-dependencies]
-lazy_static = "1.4"
+lazy_static = { version = "1.4" }
