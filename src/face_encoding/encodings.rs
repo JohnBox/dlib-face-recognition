@@ -1,5 +1,5 @@
 use std::ops::Deref;
-use std::slice;
+use std::{slice, fmt};
 
 use super::encoding::FaceEncoding;
 
@@ -29,6 +29,12 @@ impl Deref for FaceEncodings {
                 slice::from_raw_parts(pointer, len)
             }
         }
+    }
+}
+
+impl fmt::Debug for FaceEncodings {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        self.deref().fmt(fmt)
     }
 }
 
