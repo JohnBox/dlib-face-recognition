@@ -43,15 +43,16 @@ impl FaceComparer {
         }
     }
 
-    pub fn find(&self, face: &FaceEncoding, tolerance: f64) -> Option<(usize, f64)> {
-        if let Some((key, x)) = self
+    pub fn find(&self, face: &FaceEncoding, tolerance: f64) -> Option<(String, f64)> {
+        if let Some((key, distance)) = self
             .encodings
             .iter()
             .map(|(i, f)| (i, f.distance(face)))
             .min_by(|(_, x), (_, y)| x.partial_cmp(y).unwrap())
         {
-            if x <= tolerance {
-                Some((*key, x))
+            if distance <= tolerance {
+                let name = self.get_name_unchecked(key).to_string();
+                Some((name, distance))
             } else {
                 None
             }
