@@ -7,10 +7,11 @@ pub struct FaceComparer {
     seed: usize,
     names: HashMap<usize, String>,
     encodings: HashMap<usize, FaceEncoding>,
+    tolerance: f64,
 }
 
 impl FaceComparer {
-    pub fn new(names: Vec<String>, encodings: Vec<FaceEncoding>) -> Self {
+    pub fn new(names: Vec<String>, encodings: Vec<FaceEncoding>, tolerance: f64) -> Self {
         assert_eq!(names.len(), encodings.len());
 
         let seed = names.len();
@@ -21,6 +22,7 @@ impl FaceComparer {
             seed,
             names,
             encodings,
+            tolerance,
         }
     }
 
@@ -43,14 +45,14 @@ impl FaceComparer {
         }
     }
 
-    pub fn find(&self, face: &FaceEncoding, tolerance: f64) -> Option<(String, f64)> {
+    pub fn find(&self, face: &FaceEncoding) -> Option<(String, f64)> {
         if let Some((key, distance)) = self
             .encodings
             .iter()
             .map(|(i, f)| (i, f.distance(face)))
             .min_by(|(_, x), (_, y)| x.partial_cmp(y).unwrap())
         {
-            if distance <= tolerance {
+            if distance <= self.tolerance {
                 let name = self.get_name_unchecked(key).to_string();
                 Some((name, distance))
             } else {
