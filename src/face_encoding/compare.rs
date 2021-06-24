@@ -15,8 +15,17 @@ impl FaceComparer {
         assert_eq!(names.len(), encodings.len());
 
         let seed = names.len();
-        let names = (0..seed - 1).zip(names).collect();
-        let encodings = (0..seed - 1).zip(encodings).collect();
+
+        let names = if seed > 0 {
+            (0..&seed - 1).zip(names).collect()
+        } else {
+            HashMap::default()
+        };
+        let encodings = if seed > 0 {
+            (0..&seed - 1).zip(encodings).collect()
+        } else {
+            HashMap::default()
+        };
 
         FaceComparer {
             seed,
