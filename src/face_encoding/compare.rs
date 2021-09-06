@@ -72,7 +72,7 @@ impl FaceComparer {
         }
     }
 
-    pub fn find_name(&self, name: &String) -> Option<usize> {
+    pub fn find_name(&self, name: &str) -> Option<usize> {
         self.names.iter().find_map(|(&key, n)| {
             if n == name {
                 Some(key)
