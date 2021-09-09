@@ -39,8 +39,11 @@ fn main() {
     #[cfg(target_os = "macos")]
     let opencv_include_dir = "/usr/local/Cellar/opencv/4.5.2_4/include/opencv4";
 
-    #[cfg(not(target_os = "macos"))]
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
     let opencv_include_dir = "/usr/include/opencv4";
+
+    #[cfg(target_arch = "aarch64")]
+    let opencv_include_dir = "/usr/local/include/opencv4";
 
     cpp_build::Config::new()
         .include(opencv_include_dir)
