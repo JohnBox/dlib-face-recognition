@@ -14,7 +14,7 @@ fn load_image(filename: &str) -> RgbImage {
     let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join("assets")
         .join(filename);
-    image::open(&path).unwrap().to_rgb()
+    image::open(&path).unwrap().to_rgb8()
 }
 
 #[cfg(feature = "embed-all")]
