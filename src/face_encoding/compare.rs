@@ -16,13 +16,13 @@ impl FaceComparer {
 
         let seed = names.len();
 
-        let names = if seed > 0 {
-            (0..&seed).zip(names).collect()
+        let names = if names.len() > 0 {
+            (0..&seed.clone()).zip(names).collect()
         } else {
             HashMap::default()
         };
         let encodings = if seed > 0 {
-            (0..&seed).zip(encodings).collect()
+            (0..&seed.clone()).zip(encodings).collect()
         } else {
             HashMap::default()
         };
